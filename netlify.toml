@@ -1,0 +1,25 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Sync functions on the free plan stop around 10s. Pro allows up to 26s.
+# ReceiveNotification holds the connection for receiveTimeout (20s), so a short
+# platform timeout just makes the client poll again — the notification stays
+# in the GREEN-API queue until DeleteNotification.
+[functions."green-api"]
+  timeout = 26
+
+[[redirects]]
+  from = "/green-api/*"
+  to = "/.netlify/functions/green-api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/green-api/(.*)",
+      "destination": "/api/green-api/$1"
+    }
+  ],
+  "functions": {
+    "api/green-api/[...path].js": {
+      "maxDuration": 30
+    }
+  }
+}
