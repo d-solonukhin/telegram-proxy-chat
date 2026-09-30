@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import ui from '../../styles/ui.module.css';
+import styles from './Composer.module.css';
 
 type Props = {
   chatId: string;
@@ -47,7 +49,7 @@ export function Composer({ chatId, onSend }: Props) {
 
   return (
     <form
-      className="composer"
+      className={styles.composer}
       onSubmit={(event) => {
         event.preventDefault();
         send();
@@ -55,6 +57,7 @@ export function Composer({ chatId, onSend }: Props) {
     >
       <textarea
         ref={areaRef}
+        className={`${ui.control} ${styles.input}`}
         rows={1}
         value={text}
         maxLength={4096}
@@ -63,13 +66,13 @@ export function Composer({ chatId, onSend }: Props) {
         onChange={(event) => setText(event.target.value)}
         onKeyDown={onKeyDown}
       />
-      <div className="composer__side">
+      <div className={styles.side}>
         {text.length >= 3000 && (
-          <span className={tooLong ? 'counter counter--over' : 'counter'}>
+          <span className={[styles.counter, tooLong ? styles.over : ''].filter(Boolean).join(' ')}>
             {text.length}/4096
           </span>
         )}
-        <button type="submit" className="send" disabled={!canSend} aria-label="Отправить">
+        <button type="submit" className={styles.send} disabled={!canSend} aria-label="Отправить">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path
               fill="currentColor"

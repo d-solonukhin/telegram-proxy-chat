@@ -1,0 +1,56 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg-elev);
+  border-right: 1px solid var(--line);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.title { flex: 1; min-width: 0; }
+
+.title h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.newChat { padding: 12px 14px 4px; }
+
+.foot {
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.banner {
+  margin: 10px 14px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(106, 179, 243, 0.12);
+  color: #d7ebff;
+  font-size: 13px;
+}
+
+.banner p { margin: 0 0 8px; }
+
+.warn {
+  background: rgba(227, 179, 65, 0.12);
+  color: #ffe7ad;
+}
+
+.banner .dismiss { padding: 6px 10px; }
+
+@media (max-width: 800px) {
+  :global([data-pane='chat']) .sidebar { display: none; }
+}

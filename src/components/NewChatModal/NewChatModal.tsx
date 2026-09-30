@@ -1,5 +1,7 @@
 import { useEffect, useId, useState, type FormEvent } from 'react';
-import { normalizePhone, normalizeUsername } from '../format';
+import { normalizePhone, normalizeUsername } from '../../format';
+import ui from '../../styles/ui.module.css';
+import styles from './NewChatModal.module.css';
 
 type Mode = 'phone' | 'username';
 
@@ -53,21 +55,21 @@ export function NewChatModal({ onClose, onCreate }: Props) {
 
   return (
     <div
-      className="modal-backdrop"
+      className={styles.backdrop}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget && !loading) onClose();
       }}
     >
-      <form className="modal" onSubmit={(event) => void submit(event)} role="dialog" aria-modal="true" aria-labelledby={`${fieldId}-title`}>
+      <form className={styles.modal} onSubmit={(event) => void submit(event)} role="dialog" aria-modal="true" aria-labelledby={`${fieldId}-title`}>
         <h2 id={`${fieldId}-title`}>Новый чат</h2>
-        <p className="modal__hint">Номер или @username нужны только чтобы узнать chatId. Дальше сообщения уходят по chatId.</p>
+        <p className={styles.hint}>Номер или @username нужны только чтобы узнать chatId. Дальше сообщения уходят по chatId.</p>
 
-        <div className="segment" role="tablist">
+        <div className={styles.segment} role="tablist">
           <button
             type="button"
             role="tab"
             aria-selected={mode === 'phone'}
-            className={mode === 'phone' ? 'segment__btn segment__btn--active' : 'segment__btn'}
+            className={[styles.tab, mode === 'phone' ? styles.tabActive : ''].filter(Boolean).join(' ')}
             onClick={() => setMode('phone')}
             disabled={loading}
           >
@@ -77,7 +79,7 @@ export function NewChatModal({ onClose, onCreate }: Props) {
             type="button"
             role="tab"
             aria-selected={mode === 'username'}
-            className={mode === 'username' ? 'segment__btn segment__btn--active' : 'segment__btn'}
+            className={[styles.tab, mode === 'username' ? styles.tabActive : ''].filter(Boolean).join(' ')}
             onClick={() => setMode('username')}
             disabled={loading}
           >
@@ -86,10 +88,11 @@ export function NewChatModal({ onClose, onCreate }: Props) {
         </div>
 
         {mode === 'phone' ? (
-          <label className="field" htmlFor={fieldId}>
-            <span>Номер в международном формате</span>
+          <label className={ui.field} htmlFor={fieldId}>
+            <span className={ui.label}>Номер в международном формате</span>
             <input
               id={fieldId}
+              className={ui.control}
               autoFocus
               inputMode="numeric"
               autoComplete="off"
@@ -101,10 +104,11 @@ export function NewChatModal({ onClose, onCreate }: Props) {
             />
           </label>
         ) : (
-          <label className="field" htmlFor={fieldId}>
-            <span>Telegram @username</span>
+          <label className={ui.field} htmlFor={fieldId}>
+            <span className={ui.label}>Telegram @username</span>
             <input
               id={fieldId}
+              className={ui.control}
               autoFocus
               autoComplete="off"
               spellCheck={false}
@@ -117,16 +121,16 @@ export function NewChatModal({ onClose, onCreate }: Props) {
         )}
 
         {error && (
-          <div className="callout" role="alert">
+          <div className={ui.callout} role="alert">
             <p>{error}</p>
           </div>
         )}
 
-        <div className="modal__actions">
-          <button type="button" className="btn btn--ghost" onClick={onClose} disabled={loading}>
+        <div className={styles.actions}>
+          <button type="button" className={`${ui.btn} ${ui.ghost}`} onClick={onClose} disabled={loading}>
             Отмена
           </button>
-          <button type="submit" className="btn" disabled={loading}>
+          <button type="submit" className={ui.btn} disabled={loading}>
             {loading ? 'Ищем аккаунт…' : 'Найти'}
           </button>
         </div>

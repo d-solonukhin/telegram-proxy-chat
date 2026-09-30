@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { chatSubtitle, chatTitle, formatDayLabel, hueFromId, initials } from '../format';
-import type { PollPhase } from '../hooks/useNotificationPoll';
-import type { Chat, Message } from '../types';
-import { Composer } from './Composer';
-import { MessageBubble } from './MessageBubble';
-import { Status } from './Sidebar';
+import { chatSubtitle, chatTitle, formatDayLabel, hueFromId, initials } from '../../format';
+import type { PollPhase } from '../../hooks/useNotificationPoll';
+import ui from '../../styles/ui.module.css';
+import type { Chat, Message } from '../../types';
+import { Composer } from '../Composer/Composer';
+import { MessageBubble } from '../MessageBubble/MessageBubble';
+import { Status } from '../Status/Status';
+import styles from './ChatWindow.module.css';
 
 type Props = {
   chat: Chat | null;
@@ -34,8 +36,8 @@ export function ChatWindow({ chat, messages, phase, detail, onBack, onSend, onRe
 
   if (!chat) {
     return (
-      <section className="chat-pane chat-pane--empty">
-        <div className="placeholder">
+      <section className={`${styles.pane} ${styles.emptyPane}`}>
+        <div className={styles.placeholder}>
           <h2>Выберите чат</h2>
           <p>Или начните новый по номеру телефона или @username.</p>
         </div>
@@ -46,37 +48,37 @@ export function ChatWindow({ chat, messages, phase, detail, onBack, onSend, onRe
   let lastDay = '';
 
   return (
-    <section className="chat-pane">
-      <header className="chat-header">
-        <button type="button" className="back-btn" onClick={onBack} aria-label="К списку чатов">
+    <section className={styles.pane}>
+      <header className={styles.header}>
+        <button type="button" className={styles.back} onClick={onBack} aria-label="К списку чатов">
           ←
         </button>
-        <span className="avatar avatar--sm" style={{ background: `hsl(${hueFromId(chat.chatId)} 38% 36%)` }}>
+        <span className={`${ui.avatar} ${ui.avatarSm}`} style={{ background: `hsl(${hueFromId(chat.chatId)} 38% 36%)` }}>
           {initials(chat)}
         </span>
-        <div className="chat-header__text">
+        <div className={styles.headerText}>
           <h2>{chatTitle(chat)}</h2>
           <p>{chatSubtitle(chat)}</p>
         </div>
-        <Status phase={phase} detail={detail} />
+        <Status phase={phase} detail={detail} compact />
       </header>
 
       <div
-        className="messages"
+        className={styles.messages}
         ref={scrollerRef}
         onScroll={(event) => {
           const el = event.currentTarget;
           stickRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
         }}
       >
-        {messages.length === 0 && <p className="empty">Нет сообщений</p>}
+        {messages.length === 0 && <p className={styles.empty}>Нет сообщений</p>}
         {messages.map((message) => {
           const day = formatDayLabel(message.timestamp);
           const showDay = day !== lastDay;
           lastDay = day;
           return (
             <div key={message.idMessage}>
-              {showDay && <div className="day">{day}</div>}
+              {showDay && <div className={styles.day}>{day}</div>}
               <MessageBubble message={message} onRetry={onRetry} />
             </div>
           );

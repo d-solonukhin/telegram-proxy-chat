@@ -7,10 +7,11 @@ import {
   normalizeCredentials,
   sendMessage as apiSendMessage,
 } from './api/greenApi';
-import { ChatWindow } from './components/ChatWindow';
-import { BootScreen, LoginScreen } from './components/LoginScreen';
-import { NewChatModal } from './components/NewChatModal';
-import { Sidebar } from './components/Sidebar';
+import styles from './App.module.css';
+import { ChatWindow } from './components/ChatWindow/ChatWindow';
+import { BootScreen, LoginScreen } from './components/LoginScreen/LoginScreen';
+import { NewChatModal } from './components/NewChatModal/NewChatModal';
+import { Sidebar } from './components/Sidebar/Sidebar';
 import { createLocalId } from './format';
 import { useChats } from './hooks/useChats';
 import { useNotificationPoll } from './hooks/useNotificationPoll';
@@ -197,7 +198,7 @@ export function App() {
   const thread = selected ? messages[selected.chatId] ?? EMPTY_MESSAGES : EMPTY_MESSAGES;
 
   return (
-    <div className="app" data-pane={pane}>
+    <div className={styles.app} data-pane={pane}>
       <Sidebar
         chats={chats}
         messages={messages}

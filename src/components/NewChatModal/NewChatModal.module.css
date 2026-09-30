@@ -1,0 +1,48 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.modal {
+  width: min(440px, 100%);
+  background: #1c2a38;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.modal h2 {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.hint { margin: 8px 0 14px; color: var(--muted); font-size: 14px; }
+
+.segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: #0e1621;
+}
+
+.tab {
+  border: 0;
+  border-radius: 9px;
+  padding: 8px;
+  background: transparent;
+  color: var(--muted);
+}
+
+.tabActive { background: #243646; color: var(--text); }
+
+.actions { display: flex; justify-content: flex-end; gap: 8px; }

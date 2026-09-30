@@ -1,5 +1,7 @@
-import { chatTitle, formatListTime, hueFromId, initials, lastActivity, lastPreview } from '../format';
-import type { Chat, Message } from '../types';
+import { chatTitle, formatListTime, hueFromId, initials, lastActivity, lastPreview } from '../../format';
+import ui from '../../styles/ui.module.css';
+import type { Chat, Message } from '../../types';
+import styles from './ChatList.module.css';
 
 type Props = {
   chats: Chat[];
@@ -14,11 +16,11 @@ export function ChatList({ chats, messages, selectedId, onSelect }: Props) {
   );
 
   if (sorted.length === 0) {
-    return <p className="empty empty--side">Нет чатов. Нажмите «Новый чат».</p>;
+    return <p className={styles.empty}>Нет чатов. Нажмите «Новый чат».</p>;
   }
 
   return (
-    <div className="chat-list" role="list">
+    <div className={styles.list} role="list">
       {sorted.map((chat) => {
         const thread = messages[chat.chatId];
         const activity = lastActivity(chat, thread);
@@ -28,21 +30,21 @@ export function ChatList({ chats, messages, selectedId, onSelect }: Props) {
             key={chat.chatId}
             type="button"
             role="listitem"
-            className={active ? 'chat-item chat-item--active' : 'chat-item'}
+            className={[styles.item, active ? styles.active : ''].filter(Boolean).join(' ')}
             aria-current={active ? 'true' : undefined}
             onClick={() => onSelect(chat.chatId)}
           >
-            <span className="avatar" style={{ background: `hsl(${hueFromId(chat.chatId)} 38% 36%)` }}>
+            <span className={ui.avatar} style={{ background: `hsl(${hueFromId(chat.chatId)} 38% 36%)` }}>
               {initials(chat)}
             </span>
-            <span className="chat-item__body">
-              <span className="chat-item__top">
-                <span className="chat-item__name">{chatTitle(chat)}</span>
+            <span className={styles.body}>
+              <span className={styles.top}>
+                <span className={styles.name}>{chatTitle(chat)}</span>
                 {thread && thread.length > 0 && (
                   <time dateTime={new Date(activity * 1000).toISOString()}>{formatListTime(activity)}</time>
                 )}
               </span>
-              <span className="chat-item__preview">{lastPreview(thread)}</span>
+              <span className={styles.preview}>{lastPreview(thread)}</span>
             </span>
           </button>
         );

@@ -1,0 +1,10 @@
+.app {
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--sidebar) minmax(0, 1fr);
+  background: var(--bg-chat);
+}
+
+@media (max-width: 800px) {
+  .app { grid-template-columns: 1fr; }
+}

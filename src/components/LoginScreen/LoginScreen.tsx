@@ -1,5 +1,7 @@
 import { useId, useState, type FormEvent } from 'react';
-import { QR_AUTH_MESSAGE } from '../api/greenApi';
+import { QR_AUTH_MESSAGE } from '../../api/greenApi';
+import ui from '../../styles/ui.module.css';
+import styles from './LoginScreen.module.css';
 
 type Props = {
   initialId: string;
@@ -37,9 +39,9 @@ export function LoginScreen({
   };
 
   return (
-    <main className="login-page">
-      <form className="login-card" onSubmit={handleSubmit} autoComplete="off">
-        <div className="brand">
+    <main className={styles.page}>
+      <form className={styles.card} onSubmit={handleSubmit} autoComplete="off">
+        <div className={styles.brand}>
           <Logo />
           <div>
             <h1>Telegram</h1>
@@ -47,10 +49,11 @@ export function LoginScreen({
           </div>
         </div>
 
-        <label className="field" htmlFor={idField}>
-          <span>ID инстанса (idInstance)</span>
+        <label className={ui.field} htmlFor={idField}>
+          <span className={ui.label}>ID инстанса (idInstance)</span>
           <input
             id={idField}
+            className={ui.control}
             inputMode="numeric"
             autoComplete="off"
             spellCheck={false}
@@ -61,11 +64,12 @@ export function LoginScreen({
           />
         </label>
 
-        <label className="field" htmlFor={tokenField}>
-          <span>Токен инстанса (apiTokenInstance)</span>
-          <span className="field__row">
+        <label className={ui.field} htmlFor={tokenField}>
+          <span className={ui.label}>Токен инстанса (apiTokenInstance)</span>
+          <span className={ui.row}>
             <input
               id={tokenField}
+              className={ui.control}
               type={showToken ? 'text' : 'password'}
               autoComplete="new-password"
               spellCheck={false}
@@ -76,7 +80,7 @@ export function LoginScreen({
             />
             <button
               type="button"
-              className="btn btn--ghost"
+              className={`${ui.btn} ${ui.ghost}`}
               onClick={() => setShowToken((value) => !value)}
               disabled={checking}
             >
@@ -85,10 +89,11 @@ export function LoginScreen({
           </span>
         </label>
 
-        <label className="field" htmlFor={urlField}>
-          <span>URL API (apiUrl), необязательно</span>
+        <label className={ui.field} htmlFor={urlField}>
+          <span className={ui.label}>URL API (apiUrl), необязательно</span>
           <input
             id={urlField}
+            className={ui.control}
             inputMode="url"
             autoComplete="off"
             spellCheck={false}
@@ -97,11 +102,11 @@ export function LoginScreen({
             onChange={(event) => setApiUrl(event.target.value.trim())}
             placeholder="https://4100.api.green-api.com"
           />
-          <small>Если пусто — https://XXXX.api.green-api.com, где XXXX первые 4 цифры idInstance.</small>
+          <small className={ui.hint}>Если пусто — https://XXXX.api.green-api.com, где XXXX первые 4 цифры idInstance.</small>
         </label>
 
         {error && (
-          <div className="callout" role="alert">
+          <div className={ui.callout} role="alert">
             <p>{error}</p>
             {error === QR_AUTH_MESSAGE && (
               <p>
@@ -111,16 +116,16 @@ export function LoginScreen({
           </div>
         )}
 
-        <button className="btn btn--block" type="submit" disabled={checking}>
+        <button className={`${ui.btn} ${ui.block}`} type="submit" disabled={checking}>
           {checking ? 'Проверяем инстанс…' : 'Войти'}
         </button>
 
-        <div className="login-links">
+        <div className={styles.links}>
           <a href="https://console.green-api.com" target="_blank" rel="noreferrer">
             Личный кабинет GREEN-API
           </a>
           {canClear && (
-            <button type="button" className="btn btn--ghost" onClick={onClear} disabled={checking}>
+            <button type="button" className={`${ui.btn} ${ui.ghost}`} onClick={onClear} disabled={checking}>
               Выйти
             </button>
           )}
@@ -132,10 +137,10 @@ export function LoginScreen({
 
 export function BootScreen() {
   return (
-    <main className="login-page">
-      <div className="login-card boot-card">
+    <main className={styles.page}>
+      <div className={`${styles.card} ${styles.boot}`}>
         <Logo />
-        <p className="boot-card__text">Подключаемся…</p>
+        <p className={styles.bootText}>Подключаемся…</p>
       </div>
     </main>
   );
@@ -143,7 +148,7 @@ export function BootScreen() {
 
 function Logo() {
   return (
-    <svg className="logo" viewBox="0 0 32 32" aria-hidden="true">
+    <svg className={styles.logo} viewBox="0 0 32 32" aria-hidden="true">
       <rect width="32" height="32" rx="10" fill="#2b5278" />
       <path
         fill="#fff"
