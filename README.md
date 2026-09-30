@@ -4,24 +4,14 @@
 
 ## Локальный запуск
 
-Нужен Node.js 18+.
+v. Node 18+.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Откройте http://localhost:5173. Не открывайте `dist/index.html` с диска: без прокси браузер заблокирует запросы к GREEN-API из-за CORS.
-
-Проверка сборки:
-
-```bash
-npm test
-npm run build
-npm run preview
-```
-
-`npm run preview` тоже проксирует `/green-api`, как и dev-сервер.
+Откройте http://localhost:5173.
 
 ## Где взять idInstance и apiTokenInstance
 
